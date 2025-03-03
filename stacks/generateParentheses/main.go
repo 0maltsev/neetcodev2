@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	n := 3 //14
+	fmt.Println(generateParenthesis(n))
+}
+
+func generateParenthesis(n int) []string {
+	stack := make([]string, 0)
+	res := make([]string, 0)
+	
+	var backtrack func(int, int)
+	backtrack = func(openN, closedN int) {
+		if openN == n && closedN == n {
+			fmt.Printf("Full %s", stack)
+			res = append(res, strings.Join(stack, ""))
+			return
+		}
+		
+		if openN < n {
+			stack = append(stack, "(")
+			backtrack(openN+1, closedN)
+			stack = stack[:len(stack)-1]
+			fmt.Printf("open %s", stack)
+		}
+		
+		if closedN < openN {
+			stack = append(stack, ")")
+			backtrack(openN, closedN+1)
+			stack = stack[:len(stack)-1]
+			fmt.Printf("closed %s", stack)
+		}
+	}
+	
+	backtrack(0, 0)
+	return res
+}
