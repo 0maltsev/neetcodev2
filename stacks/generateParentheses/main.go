@@ -17,7 +17,6 @@ func generateParenthesis(n int) []string {
 	var backtrack func(int, int)
 	backtrack = func(openN, closedN int) {
 		if openN == n && closedN == n {
-			fmt.Printf("Full %s", stack)
 			res = append(res, strings.Join(stack, ""))
 			return
 		}
@@ -26,14 +25,12 @@ func generateParenthesis(n int) []string {
 			stack = append(stack, "(")
 			backtrack(openN+1, closedN)
 			stack = stack[:len(stack)-1]
-			fmt.Printf("open %s", stack)
 		}
 		
 		if closedN < openN {
 			stack = append(stack, ")")
 			backtrack(openN, closedN+1)
 			stack = stack[:len(stack)-1]
-			fmt.Printf("closed %s", stack)
 		}
 	}
 	
